@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:questionmakermobile/data/testchild.dart';
+import 'package:questionmakermobile/widgets/relationshipscreen.dart';
 import 'package:questionmakermobile/widgets/mainscreenwidgets.dart';
 
 void main() {
@@ -38,9 +41,44 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
 
   //final lastNameBoxController = TextEditingController()
-  String _lastName = "", _patientCode = "";
+  final _formkey = GlobalKey<FormState>();
 
-  void _check4Child() {
+  String _lastName = "", _patientCode = "";
+  bool _isSending = false;
+
+  void _submitButtonPressed() {
+    //Firbase logic needs to go here... really all of our logic can go here
+
+    //first we need to check that the app can connect with the firestore database
+    //then we need to check for the existence of the child within the database
+
+    //if we find the child, then we need to go to the next screen
+    //if not, then there needs to be some kind of error message saying it doesn't exist
+    //also need an error message that tells you if the app couldn't connect to the database
+    setState(() {
+      _isSending = true;
+    });
+
+    _go2RelationshipScreen();
+
+    setState(() {
+      _isSending = false;
+    });
+  }
+
+  void _go2RelationshipScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => RelationshipScreen(testChild)
+      )
+    );
+
+  }
+
+  bool _check4Child() {
+
+    return true;
 
   }
 
@@ -53,9 +91,10 @@ class HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Form(
+          key: _formkey,
           child: Column(
             children: [
-              const SizedBox(height: 60,),
+              const SizedBox(height: 30,),
               TextFormField(
                 decoration: const MainScreenTextEntryInputDeco(
                   labelText: "Input Child's Last Name:"
@@ -91,8 +130,12 @@ class HomeScreenState extends State<HomeScreen> {
                 width: 150,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: _check4Child,
-                  child: const Text("Submit"),
+                  onPressed: _submitButtonPressed,
+                  child: _isSending ? const SizedBox(
+                    height: 16,
+                    width: 16,
+                    child: CircularProgressIndicator(),
+                  ) : const Text("Submit")
                 )
               )
             ],

@@ -1,17 +1,11 @@
 # questionmakermobile
 
-A new Flutter project.
+This is meant to be the mobile app side of the questionmaker project.
 
-## Getting Started
+The aim for the mobile app is to be able to grab relevant data from patients corresponding to a given code - including pre-written questions - store the answers input by the end-user, and then send those answers back to the database for further review.
 
-This project is a starting point for a Flutter application.
+## Still Todo:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-#questionmakerflutterprototype
+- Add firebase functionality
+- Finish the Answer screen.
+- Other stuff?

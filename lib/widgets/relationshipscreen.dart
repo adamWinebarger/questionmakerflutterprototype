@@ -18,6 +18,8 @@ class RelationshipScreen extends StatefulWidget {
 
 class _RelationshipScreenState extends State<RelationshipScreen> {
 
+  final _formkey = GlobalKey<FormState>();
+
   bool _submitPressed = false;
   String _lastName = "", _firstName = "";
 
@@ -29,7 +31,11 @@ class _RelationshipScreenState extends State<RelationshipScreen> {
       _submitPressed = true;
     });
 
-    _go2AnswerScreen();
+    if (_formkey.currentState!.validate()) {
+
+      _go2AnswerScreen();
+
+    }
 
     setState(() {
       _submitPressed = false;
@@ -61,6 +67,7 @@ class _RelationshipScreenState extends State<RelationshipScreen> {
         padding: const EdgeInsets.all(35),
         child: SingleChildScrollView(
           child: Form(
+            key: _formkey,
             child: Column(
               children: [
                 const SizedBox(height: 15,),

@@ -52,6 +52,9 @@ class AnswerScreenState extends State<AnswerScreen> {
   void _nextPressed() {
     if (_selectedAnswer != null) {
       _answers.add(_selectedAnswer!);
+      // for (final answer in _answers) {
+      //   print(answer);
+      // }
 
       if (_count < widget._answerer.childInQuestion.questions.length - 1) {
         setState(() {
@@ -81,10 +84,11 @@ class AnswerScreenState extends State<AnswerScreen> {
   }
 
   void _backPressed() {
-    _answers.removeLast();
 
     setState(() {
       --_count;
+      _selectedAnswer = _answers.last;
+      _answers.removeLast();
     });
 
   }
@@ -124,7 +128,7 @@ class AnswerScreenState extends State<AnswerScreen> {
               //const SizedBox(height: 25,),
               for (final item in _buildRadioWidget())
                 item,
-              SizedBox(height: 25,),
+              const SizedBox(height: 25,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                children: [

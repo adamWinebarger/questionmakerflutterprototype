@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:questionmakermobile/data/testchild.dart';
 import 'package:questionmakermobile/widgets/relationshipscreen.dart';
 import 'package:questionmakermobile/widgets/mainscreenwidgets.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 
 void main() {
+
   runApp(const MyApp());
 }
 

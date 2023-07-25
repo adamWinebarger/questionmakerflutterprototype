@@ -94,6 +94,10 @@ class AnswerScreenState extends State<AnswerScreen> {
   }
 
   void _submitAnswers() {
+    //This is where we will be making our firebase call and then returning to the main screen
+    //TODO: Add in firebase call right here
+
+    Navigator.of(context).popUntil((route) => route.isFirst);
 
   }
 

@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:questionmakermobile/data/testchild.dart';
+import 'package:questionmakermobile/firebase_options.dart';
 import 'package:questionmakermobile/widgets/relationshipscreen.dart';
 import 'package:questionmakermobile/widgets/mainscreenwidgets.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-void main() {
-
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -47,6 +51,9 @@ class HomeScreenState extends State<HomeScreen> {
   //final lastNameBoxController = TextEditingController()
   final _formkey = GlobalKey<FormState>();
 
+  final CollectionReference _cr = FirebaseFirestore.instance.collection("Patients");
+
+
   String _lastName = "", _patientCode = "";
   bool _isSending = false;
 
@@ -63,10 +70,19 @@ class HomeScreenState extends State<HomeScreen> {
       _isSending = true;
     });
 
-    _go2RelationshipScreen();
+    //_go2RelationshipScreen();
+    //getData();
 
     setState(() {
       _isSending = false;
+    });
+  }
+
+  Future<void> getData() async {
+    await _cr.get().then((value) => {
+      for (var doc in value.docs) {
+        print("${doc.id} => ${doc.data()}")
+      }
     });
   }
 

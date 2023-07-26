@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
 class Child {
-  Child(this._lastName, this._patientCode, this.questions);
+  Child({required this.lastName, required this.questions, required this.patientCode});
 
-  final String _lastName, _patientCode;
-  List<String> questions = [], answers = [];
+  final String lastName, patientCode;
+  List<dynamic> questions = [];
+  List<String>answers = [];
 
-
+  factory Child.fromJson(Map<String, dynamic> json) =>
+      Child(lastName: json['lastName'] as String,
+      questions: json['Questions'],
+      patientCode: json['patientCode'] as String);
 
 }

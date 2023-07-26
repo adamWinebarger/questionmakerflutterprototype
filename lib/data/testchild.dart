@@ -7,7 +7,8 @@ final _questions = [
 ];
 
 
-final testChild = Child("Smith", "f0bb6de2d55476db07b9664eb61ba203f9bce4bf", _questions);
+final testChild = Child(lastName: "Smith",
+    patientCode: "f0bb6de2d55476db07b9664eb61ba203f9bce4bf", questions: _questions);
 
 final testChildren = [
 

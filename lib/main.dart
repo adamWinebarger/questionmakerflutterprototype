@@ -7,6 +7,8 @@ import 'package:questionmakermobile/widgets/mainscreenwidgets.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'models/child.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,12 +54,13 @@ class HomeScreenState extends State<HomeScreen> {
   final _formkey = GlobalKey<FormState>();
 
   final CollectionReference _cr = FirebaseFirestore.instance.collection("Patients");
+  QueryDocumentSnapshot<Object?>? _foundChild;
 
 
   String _lastName = "", _patientCode = "";
   bool _isSending = false;
 
-  void _submitButtonPressed() {
+  Future<void> _submitButtonPressed() async {
     //Firbase logic needs to go here... really all of our logic can go here
 
     //first we need to check that the app can connect with the firestore database
@@ -71,19 +74,44 @@ class HomeScreenState extends State<HomeScreen> {
     });
 
     //_go2RelationshipScreen();
-    //getData();
+    await getData();
+
+    if (_foundChild != null) {
+      //print(_foundChild!.data());
+      Child c = createChild();
+      print("${c.lastName}\n${c.patientCode}\n${c.questions}");
+
+    } else {
+
+    }
 
     setState(() {
       _isSending = false;
     });
   }
 
+  Child createChild() {
+
+    // print(_foundChild!.data());
+    // var lastName = _foundChild!.get('lastName'),
+    // patientCode = _foundChild!.get('patientCode'),
+    // qs = _foundChild!.get('Questions');
+    // print(qs);
+
+    Child c = Child.fromJson(_foundChild!.data() as Map<String, dynamic>);
+    return c;
+
+  }
+
   Future<void> getData() async {
-    await _cr.get().then((value) => {
-      for (var doc in value.docs) {
-        print("${doc.id} => ${doc.data()}")
+    //print(_lastName);
+    await _cr.where("lastName", isEqualTo: _lastName).where("patientCode", isEqualTo: _patientCode)
+        .get().then((value) => {
+      if (value.docs.length == 1) {
+        _foundChild = value.docs.first
       }
     });
+
   }
 
   void _go2RelationshipScreen() {
@@ -125,7 +153,7 @@ class HomeScreenState extends State<HomeScreen> {
                   }
                   return null;
                 },
-                onSaved: (value) {
+                onChanged: (value) {
                   _lastName = value!;
                 },
               ),
@@ -136,12 +164,12 @@ class HomeScreenState extends State<HomeScreen> {
                   bottomPadding: 40
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty || value.length != 40) {
-                    return 'Invalid patient code detected';
-                  }
+                  // if (value == null || value.isEmpty || value.length != 40) {
+                  //   return 'Invalid patient code detected';
+                  // }
                   return null;
                 },
-                onSaved: (value) {
+                onChanged: (value) {
                   _patientCode = value!;
                 },
               ),

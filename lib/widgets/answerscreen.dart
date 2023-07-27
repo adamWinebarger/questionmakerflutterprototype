@@ -114,7 +114,8 @@ class AnswerScreenState extends State<AnswerScreen> {
       'firstName' : answerer.firstName,
       'relationship' : answerer.relationship.name,
       'timeOfDay' : answerer.timeOfDay.name,
-      'answers' : answerMap
+      'answers' : answerMap,
+      'timestamp' : DateTime.now().toString()
     });
 
     Navigator.of(context).popUntil((route) => route.isFirst);

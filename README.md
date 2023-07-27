@@ -6,6 +6,6 @@ The aim for the mobile app is to be able to grab relevant data from patients cor
 
 ## Still Todo:
 
-- Add firebase functionality
-- Finish the Answer screen.
-- Other stuff?
+- Set up catches for when the app can't connect to the firestore database
+- Set up some sort of auth
+- ???

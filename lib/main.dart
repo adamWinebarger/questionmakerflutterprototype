@@ -78,8 +78,9 @@ class HomeScreenState extends State<HomeScreen> {
 
     if (_foundChild != null) {
       //print(_foundChild!.data());
-      Child c = createChild();
-      print("${c.lastName}\n${c.patientCode}\n${c.questions}");
+      Child child = createChild();
+      print("${child.lastName}\n${child.patientCode}\n${child.questions}\n${child.path}");
+      _go2RelationshipScreen(child);
 
     } else {
 
@@ -99,6 +100,7 @@ class HomeScreenState extends State<HomeScreen> {
     // print(qs);
 
     Child c = Child.fromJson(_foundChild!.data() as Map<String, dynamic>);
+    c.path = _foundChild!.id;
     return c;
 
   }
@@ -114,11 +116,11 @@ class HomeScreenState extends State<HomeScreen> {
 
   }
 
-  void _go2RelationshipScreen() {
+  void _go2RelationshipScreen(Child child) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => RelationshipScreen(testChild)
+          builder: (context) => RelationshipScreen(child)
       )
     );
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Child {
   Child({required this.lastName, required this.questions, required this.patientCode});
 
+  String path = '';
   final String lastName, patientCode;
   List<dynamic> questions = [];
   List<String>answers = [];

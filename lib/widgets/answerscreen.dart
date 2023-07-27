@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:questionmakermobile/models/answerer.dart';
 import 'package:questionmakermobile/models/child.dart';
@@ -96,6 +97,25 @@ class AnswerScreenState extends State<AnswerScreen> {
   void _submitAnswers() {
     //This is where we will be making our firebase call and then returning to the main screen
     //TODO: Add in firebase call right here
+    final answerer = widget._answerer;
+    final databaseReference = FirebaseFirestore.instance.collection("Patients")
+        .doc(answerer.childInQuestion.path).collection("Answers");
+    print(databaseReference);
+
+    Map<String, String> answerMap = {};
+    for (int i = 0; i < answerer.childInQuestion.questions.length; i++) {
+      answerMap[answerer.childInQuestion.questions[i]] = _answers[i].name;
+    }
+
+    databaseReference
+      .doc("${answerer.lastName}, ${answerer.firstName} - ${answerer.relationship.name}")
+      .set({
+      'lastName' : answerer.lastName,
+      'firstName' : answerer.firstName,
+      'relationship' : answerer.relationship.name,
+      'timeOfDay' : answerer.timeOfDay.name,
+      'answers' : answerMap
+    });
 
     Navigator.of(context).popUntil((route) => route.isFirst);
 

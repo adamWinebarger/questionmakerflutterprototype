@@ -81,7 +81,7 @@ class _RelationshipScreenState extends State<RelationshipScreen> {
                     }
                     return null;
                   },
-                  onSaved: (value) {
+                  onChanged: (value) {
                     _firstName = value!;
                   },
                 ),
@@ -96,7 +96,7 @@ class _RelationshipScreenState extends State<RelationshipScreen> {
                     }
                     return null;
                   },
-                  onSaved: (value) {
+                  onChanged: (value) {
                     _lastName = value!;
                   },
                 ),

@@ -50,7 +50,8 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
 
-  //final lastNameBoxController = TextEditingController()
+  final _lastNameBoxController = TextEditingController(),
+    _patientCodeBoxController = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 
   final CollectionReference _cr = FirebaseFirestore.instance.collection("Patients");
@@ -88,6 +89,8 @@ class HomeScreenState extends State<HomeScreen> {
 
     setState(() {
       _isSending = false;
+      _lastName == "";
+      _patientCode = "";
     });
   }
 
@@ -123,7 +126,12 @@ class HomeScreenState extends State<HomeScreen> {
           builder: (context) => RelationshipScreen(child)
       )
     );
+    _clearTextBoxes();
+  }
 
+  void _clearTextBoxes() {
+    _lastNameBoxController.clear();
+    _patientCodeBoxController.clear();
   }
 
   bool _check4Child() {
@@ -158,6 +166,7 @@ class HomeScreenState extends State<HomeScreen> {
                 onChanged: (value) {
                   _lastName = value!;
                 },
+                controller: _lastNameBoxController,
               ),
               const SizedBox(height: 75,),
               TextFormField(
@@ -174,6 +183,7 @@ class HomeScreenState extends State<HomeScreen> {
                 onChanged: (value) {
                   _patientCode = value!;
                 },
+                controller: _patientCodeBoxController,
               ),
               const SizedBox(height: 75,),
               SizedBox(
